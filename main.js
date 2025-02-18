@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (typeof ThreeWP !== 'undefined') {
         // Destructure THREE and THREE_ADDONS from ThreeWP
         const { THREE, OrbitControls,GLTFLoader,DRACOLoader } = ThreeWP;
+        console.log("ThreeWP",ThreeWP)
         // Create a scene
         const scene = new THREE.Scene();
         // Setup a camera
