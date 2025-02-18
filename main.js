@@ -53,11 +53,12 @@ document.addEventListener('DOMContentLoaded', function () {
             
             if (intersects.length > 0) {
                 const targetObject = intersects[0].object;
-                zoomToObject(targetObject, 0.1); // Adjust zoom percentage here
+                zoomToObject(targetObject, 7); // Adjust zoom percentage here
             }
         }
         
         function zoomToObject(object, zoomPercentage) {
+            console.log("zoom percentage: ",zoomPercentage)
             const targetPosition = new THREE.Vector3();
             object.getWorldPosition(targetPosition);
             
@@ -142,7 +143,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             raycaster.setFromCamera(mouse, camera);
             const intersects = raycaster.intersectObjects(objects);
-            console.log("intersects",intersects)
             if (intersects.length > 0) {
                 if (INTERSECTED !== intersects[0].object) {
                     if (INTERSECTED) INTERSECTED.material.emissive.setHex(0x000000);
