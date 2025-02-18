@@ -42,17 +42,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 const tokyo = obj.children[0];
                 console.log("obj.clone()",obj.clone())
                 const firstObj = tokyo.clone();
+                firstObj.material = tokyo.material.clone();
                 firstObj.name = "First Object";
                 firstObj.position.copy(new THREE.Vector3(-2,0,-2))
                 firstObj.material.color.set(0xff0000)
                 scene.add(firstObj)
                 const secondObj = tokyo.clone();
                 secondObj.name = "Second Object";
+                secondObj.material = tokyo.material.clone();
                 secondObj.material.color.set(0x00ff00)
                 secondObj.position.copy(new THREE.Vector3(2,0,-4))
                 scene.add(secondObj)
                 const thirdObj = tokyo.clone();
                 thirdObj.name = "Third Object";
+                thirdObj.material = tokyo.material.clone();
                 thirdObj.material.color.set(0x0000ff)
                 thirdObj.position.copy(new THREE.Vector3(-2,0,-6))
                 scene.add(thirdObj)
