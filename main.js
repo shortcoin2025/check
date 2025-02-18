@@ -21,17 +21,17 @@ document.addEventListener('DOMContentLoaded', function () {
         // Set camera position
         camera.position.z = 2;
         // Load a texture
-        const textureLoader = new THREE.TextureLoader();
-        const texture = textureLoader.load(
-            'https://threejsfundamentals.org/threejs/resources/images/wall.jpg',
-        ); // Replace with your image URL
-        // Create geometry
-        const geometry = new THREE.BoxGeometry(1, 1, 1);
-        // Create material
-        const material = new THREE.MeshStandardMaterial({ map: texture });
-        // Combine into mesh
-        const sphere = new THREE.Mesh(geometry, material);
-        scene.add(sphere);
+        // const textureLoader = new THREE.TextureLoader();
+        // const texture = textureLoader.load(
+        //     'https://threejsfundamentals.org/threejs/resources/images/wall.jpg',
+        // ); // Replace with your image URL
+        // // Create geometry
+        // const geometry = new THREE.BoxGeometry(1, 1, 1);
+        // // Create material
+        // const material = new THREE.MeshStandardMaterial({ map: texture });
+        // // Combine into mesh
+        // const sphere = new THREE.Mesh(geometry, material);
+        // scene.add(sphere);
 
         const newloader = new OBJLoader();
         newloader.load(
@@ -39,7 +39,20 @@ document.addEventListener('DOMContentLoaded', function () {
             // 'https://github.com/mrdoob/three.js/blob/master/examples/models/gltf/LittlestTokyo.glb', 
             function (obj) {
                 const tokyo = obj;
-                scene.add(tokyo);
+
+                const firstObj = obj.clone();
+                firstObj.name = "First Object";
+                firstObj.position.copy(new THREE.Vector3(-10,0,-10))
+                scene.add(firstObj)
+                const secondObj = obj.clone();
+                secondObj.name = "Second Object";
+                secondObj.position.copy(new THREE.Vector3(10,0,-20))
+                scene.add(secondObj)
+                const thirdObj = obj.clone();
+                thirdObj.name = "Third Object";
+                thirdObj.position.copy(new THREE.Vector3(-10,0,-30))
+                scene.add(thirdObj)
+                // scene.add(tokyo);
                 tokyo.position.copy(new THREE.Vector3(0,0,10))
             },
             undefined,
