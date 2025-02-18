@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     if (typeof ThreeWP !== 'undefined') {
         // Destructure THREE and THREE_ADDONS from ThreeWP
-        const { THREE, OrbitControls,GLTFLoader,DRACOLoader } = ThreeWP;
+        const { THREE, OrbitControls,OBJLoader,DRACOLoader } = ThreeWP;
         console.log("ThreeWP",ThreeWP)
         // Create a scene
         const scene = new THREE.Scene();
@@ -33,6 +33,21 @@ document.addEventListener('DOMContentLoaded', function () {
         const sphere = new THREE.Mesh(geometry, material);
         scene.add(sphere);
 
+        const newloader = new OBJLoader();
+        loader.load(
+            "https://shortcoin2025.github.io/check/tree.obj",
+            // 'https://github.com/mrdoob/three.js/blob/master/examples/models/gltf/LittlestTokyo.glb', 
+            function (gltf) {
+                const tokyo = gltf.scene;
+                scene.add(tokyo);
+                tokyo.position.copy(new THREE.Vector3(0,0,10))
+            },
+            undefined,
+            function (error) {
+                console.error('Error loading GLB:', error);
+            }
+        );
+
         const loader = new GLTFLoader();
         const dracoLoader = new DRACOLoader();
         dracoLoader.setDecoderPath( 'jsm/libs/draco/gltf/' );
@@ -62,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Optional: Adjust controls settings (e.g., damping, auto-rotation)
         controls.enableDamping = true; // Adds smoothness when dragging
         controls.dampingFactor = 0.03;
-        controls.autoRotate = true;
+        // controls.autoRotate = true;
         controls.autoRotateSpeed = 2;
         function animate(t = 0) {
             requestAnimationFrame(animate);
