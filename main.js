@@ -41,8 +41,40 @@ document.addEventListener('DOMContentLoaded', function () {
 
         function onMouseMove(event) {
             event.preventDefault();
-            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+            const rect = renderer.domElement.getBoundingClientRect();
+            mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+        }
+        
+        function onMouseClick(event) {
+            event.preventDefault();
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(objects);
+            
+            if (intersects.length > 0) {
+                const targetObject = intersects[0].object;
+                zoomToObject(targetObject, 0.5); // Adjust zoom percentage here
+            }
+        }
+        
+        function zoomToObject(object, zoomPercentage) {
+            const targetPosition = new THREE.Vector3();
+            object.getWorldPosition(targetPosition);
+            
+            const direction = new THREE.Vector3();
+            direction.subVectors(camera.position, targetPosition).normalize();
+            
+            const newCameraPosition = targetPosition.clone().add(direction.multiplyScalar(zoomPercentage * 10));
+            
+            new TWEEN.Tween(camera.position)
+                .to({ x: newCameraPosition.x, y: newCameraPosition.y, z: newCameraPosition.z }, 1000)
+                .easing(TWEEN.Easing.Quadratic.Out)
+                .start();
+                
+            new TWEEN.Tween(controls.target)
+                .to({ x: targetPosition.x, y: targetPosition.y, z: targetPosition.z }, 1000)
+                .easing(TWEEN.Easing.Quadratic.Out)
+                .start();
         }
 
         const newloader = new OBJLoader();
@@ -124,8 +156,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
             requestAnimationFrame(animate);
             controls.update();
+            TWEEN.update();
             renderer.render(scene, camera);
         }
+        window.addEventListener('click', onMouseClick, false);
         window.addEventListener('mousemove', onMouseMove, false);
         animate();
         // Responsive
