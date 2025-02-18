@@ -34,6 +34,10 @@ document.addEventListener('DOMContentLoaded', function () {
         // scene.add(sphere);
         scene.background = new THREE.Color(0xdddddd);
 
+        const raycaster = new THREE.Raycaster();
+        const mouse = new Vector2();
+        let INTERSECTED = null;
+
         const newloader = new OBJLoader();
         newloader.load(
             "https://shortcoin2025.github.io/check/tree.obj",
@@ -41,24 +45,20 @@ document.addEventListener('DOMContentLoaded', function () {
             function (obj) {
                 const tokyo = obj.children[0];
                 console.log("obj.clone()",obj.clone())
-                const firstObj = tokyo.clone();
-                firstObj.material = tokyo.material.clone();
-                firstObj.name = "First Object";
-                firstObj.position.copy(new THREE.Vector3(-2,0,-2))
-                firstObj.material.color.set(0xff0000)
-                scene.add(firstObj)
-                const secondObj = tokyo.clone();
-                secondObj.name = "Second Object";
-                secondObj.material = tokyo.material.clone();
-                secondObj.material.color.set(0x00ff00)
-                secondObj.position.copy(new THREE.Vector3(2,0,-4))
-                scene.add(secondObj)
-                const thirdObj = tokyo.clone();
-                thirdObj.name = "Third Object";
-                thirdObj.material = tokyo.material.clone();
-                thirdObj.material.color.set(0x0000ff)
-                thirdObj.position.copy(new THREE.Vector3(-2,0,-6))
-                scene.add(thirdObj)
+                function createClone(name, color, position) {
+                    const clone = tokyo.clone();
+                    clone.material = tokyo.material.clone();
+                    clone.name = name;
+                    clone.material.emissive = new THREE.Color(0x000000);
+                    clone.material.color.set(color);
+                    clone.position.copy(position);
+                    scene.add(clone);
+                    objects.push(clone);
+                }
+                
+                createClone("First Object", 0xff0000, new THREE.Vector3(-2, 0, -2));
+                createClone("Second Object", 0x00ff00, new THREE.Vector3(2, 0, -4));
+                createClone("Third Object", 0x0000ff, new THREE.Vector3(-2, 0, -6));
                 // scene.add(tokyo);
                 tokyo.position.copy(new THREE.Vector3(0,0,10))
             },
@@ -100,6 +100,21 @@ document.addEventListener('DOMContentLoaded', function () {
         // controls.autoRotate = true;
         controls.autoRotateSpeed = 2;
         function animate(t = 0) {
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(objects);
+            
+            if (intersects.length > 0) {
+                if (INTERSECTED !== intersects[0].object) {
+                    if (INTERSECTED) INTERSECTED.material.emissive.setHex(0x000000);
+                    INTERSECTED = intersects[0].object;
+                    INTERSECTED.material.emissive.setHex(0xffff00);
+                }
+            } else {
+                if (INTERSECTED) INTERSECTED.material.emissive.setHex(0x000000);
+                INTERSECTED = null;
+            }
+            
             requestAnimationFrame(animate);
             controls.update();
             renderer.render(scene, camera);
