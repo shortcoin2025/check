@@ -38,6 +38,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const mouse = new Vector2();
         let INTERSECTED = null;
 
+        function onMouseMove(event) {
+            event.preventDefault();
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+        }
+
         const newloader = new OBJLoader();
         newloader.load(
             "https://shortcoin2025.github.io/check/tree.obj",
@@ -114,11 +120,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (INTERSECTED) INTERSECTED.material.emissive.setHex(0x000000);
                 INTERSECTED = null;
             }
-            
+
             requestAnimationFrame(animate);
             controls.update();
             renderer.render(scene, camera);
         }
+        window.addEventListener('mousemove', onMouseMove, false);
         animate();
         // Responsive
         window.addEventListener('resize', () => {
