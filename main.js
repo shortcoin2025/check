@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
         scene.add(sphere);
 
         const newloader = new OBJLoader();
-        loader.load(
+        newloader.load(
             "https://shortcoin2025.github.io/check/tree.obj",
             // 'https://github.com/mrdoob/three.js/blob/master/examples/models/gltf/LittlestTokyo.glb', 
             function (gltf) {
