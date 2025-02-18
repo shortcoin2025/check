@@ -37,8 +37,8 @@ document.addEventListener('DOMContentLoaded', function () {
         newloader.load(
             "https://shortcoin2025.github.io/check/tree.obj",
             // 'https://github.com/mrdoob/three.js/blob/master/examples/models/gltf/LittlestTokyo.glb', 
-            function (gltf) {
-                const tokyo = gltf.scene;
+            function (obj) {
+                const tokyo = obj;
                 scene.add(tokyo);
                 tokyo.position.copy(new THREE.Vector3(0,0,10))
             },
