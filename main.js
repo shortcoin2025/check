@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
         scene.background = new THREE.Color(0xdddddd);
 
         const raycaster = new THREE.Raycaster();
-        const mouse = new Vector2();
+        const mouse = new THREE.Vector2();
         let INTERSECTED = null;
 
         function onMouseMove(event) {
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             raycaster.setFromCamera(mouse, camera);
             const intersects = raycaster.intersectObjects(objects);
-            
+            console.log("intersects",intersects)
             if (intersects.length > 0) {
                 if (INTERSECTED !== intersects[0].object) {
                     if (INTERSECTED) INTERSECTED.material.emissive.setHex(0x000000);
