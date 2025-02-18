@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     if (typeof ThreeWP !== 'undefined') {
         // Destructure THREE and THREE_ADDONS from ThreeWP
-        const { THREE, OrbitControls,GLTFLoader } = ThreeWP;
+        const { THREE, OrbitControls,GLTFLoader,DRACOLoader } = ThreeWP;
         // Create a scene
         const scene = new THREE.Scene();
         // Setup a camera
@@ -33,6 +33,10 @@ document.addEventListener('DOMContentLoaded', function () {
         scene.add(sphere);
 
         const loader = new GLTFLoader();
+        const dracoLoader = new DRACOLoader();
+        dracoLoader.setDecoderPath( 'jsm/libs/draco/gltf/' );
+        loader.setDRACOLoader( dracoLoader );
+
         loader.load(
             "https://shortcoin2025.github.io/check/LittlestTokyo.glb",
             // 'https://github.com/mrdoob/three.js/blob/master/examples/models/gltf/LittlestTokyo.glb', 
