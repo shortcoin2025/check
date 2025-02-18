@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
             
             if (intersects.length > 0) {
                 const targetObject = intersects[0].object;
-                zoomToObject(targetObject, 0.5); // Adjust zoom percentage here
+                zoomToObject(targetObject, 0.9); // Adjust zoom percentage here
             }
         }
         
