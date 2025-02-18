@@ -40,20 +40,20 @@ document.addEventListener('DOMContentLoaded', function () {
             // 'https://github.com/mrdoob/three.js/blob/master/examples/models/gltf/LittlestTokyo.glb', 
             function (obj) {
                 const tokyo = obj;
-
+                console.log("obj.clone()",obj.clone())
                 const firstObj = obj.clone();
                 firstObj.name = "First Object";
                 firstObj.position.copy(new THREE.Vector3(-2,0,-2))
-                firstObj.material.color.set(0xff0000)
+                // firstObj.material.color.set(0xff0000)
                 scene.add(firstObj)
                 const secondObj = obj.clone();
                 secondObj.name = "Second Object";
-                secondObj.material.color.set(0x00ff00)
+                // secondObj.material.color.set(0x00ff00)
                 secondObj.position.copy(new THREE.Vector3(2,0,-4))
                 scene.add(secondObj)
                 const thirdObj = obj.clone();
                 thirdObj.name = "Third Object";
-                thirdObj.material.color.set(0x0000ff)
+                // thirdObj.material.color.set(0x0000ff)
                 thirdObj.position.copy(new THREE.Vector3(-2,0,-6))
                 scene.add(thirdObj)
                 // scene.add(tokyo);
