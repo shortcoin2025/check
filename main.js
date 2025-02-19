@@ -96,14 +96,16 @@ document.addEventListener('DOMContentLoaded', function () {
             objects.push(clone);
         }
 
-        const tree = loadObjectWithObj("https://shortcoin2025.github.io/check/tree.obj");
-        if(tree) {
-            console.log("tree",tree)
-            const tokyo = tree.children[0]
-            createClone(tokyo,"First Object", 0xff0000, new THREE.Vector3(-2, 0, -2));
-            createClone(tokyo,"Second Object", 0x00ff00, new THREE.Vector3(2, 0, -4));
-            createClone(tokyo,"Third Object", 0x0000ff, new THREE.Vector3(-2, 0, -6));
-        }
+        loadObjectWithObj("https://shortcoin2025.github.io/check/tree.obj").then(tree => {
+            if(tree) {
+                console.log("tree",tree)
+                const tokyo = tree.children[0]
+                createClone(tokyo,"First Object", 0xff0000, new THREE.Vector3(-2, 0, -2));
+                createClone(tokyo,"Second Object", 0x00ff00, new THREE.Vector3(2, 0, -4));
+                createClone(tokyo,"Third Object", 0x0000ff, new THREE.Vector3(-2, 0, -6));
+            }
+        });
+        
 
         // const newloader = new OBJLoader();
         // newloader.load(
