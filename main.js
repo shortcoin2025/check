@@ -98,7 +98,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const tree = loadObjectWithObj("https://shortcoin2025.github.io/check/tree.obj");
         if(tree) {
-            console.log("obj.clone()",obj.clone())
             createClone(tokyo,"First Object", 0xff0000, new THREE.Vector3(-2, 0, -2));
             createClone(tokyo,"Second Object", 0x00ff00, new THREE.Vector3(2, 0, -4));
             createClone(tokyo,"Third Object", 0x0000ff, new THREE.Vector3(-2, 0, -6));
