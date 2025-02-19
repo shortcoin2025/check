@@ -144,8 +144,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         loader.load(
             // "https://drive.usercontent.google.com/download?id=1EuDS-cRgC9jBH3S8NdN35XkK31htyclK&export=download&authuser=0",
-            // "https://shortcoin2025.github.io/check/ReachNetwork.glb",
-            'https://github.com/mrdoob/three.js/blob/master/examples/models/gltf/LittlestTokyo.glb', 
+            "https://shortcoin2025.github.io/check/LittlestTokyo.glb",
+            // 'https://github.com/mrdoob/three.js/blob/master/examples/models/gltf/LittlestTokyo.glb', 
             function (gltf) {
                 const tokyo = gltf.scene;
                 console.log("gltf: ",tokyo,gltf)
