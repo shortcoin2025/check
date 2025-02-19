@@ -78,47 +78,54 @@ document.addEventListener('DOMContentLoaded', function () {
                 .start();
         }
 
-        const newloader = new OBJLoader();
-        newloader.load(
-            "https://shortcoin2025.github.io/check/tree.obj",
-            // 'https://github.com/mrdoob/three.js/blob/master/examples/models/gltf/LittlestTokyo.glb', 
-            function (obj) {
-                const tokyo = obj.children[0];
-                console.log("obj.clone()",obj.clone())
-                function createClone(name, color, position) {
-                    const clone = tokyo.clone();
-                    clone.material = tokyo.material.clone();
-                    clone.name = name;
-                    clone.material.emissive = new THREE.Color(0x000000);
-                    clone.material.color.set(color);
-                    clone.position.copy(position);
-                    scene.add(clone);
-                    objects.push(clone);
-                }
-                
-                createClone("First Object", 0xff0000, new THREE.Vector3(-2, 0, -2));
-                createClone("Second Object", 0x00ff00, new THREE.Vector3(2, 0, -4));
-                createClone("Third Object", 0x0000ff, new THREE.Vector3(-2, 0, -6));
-                // scene.add(tokyo);
-                tokyo.position.copy(new THREE.Vector3(0,0,10))
-            },
-            undefined,
-            function (error) {
-                console.error('Error loading GLB:', error);
-            }
-        );
 
-        // const loader = new GLTFLoader();
-        // const dracoLoader = new DRACOLoader();
-        // dracoLoader.setDecoderPath( 'jsm/libs/draco/gltf/' );
-        // loader.setDRACOLoader( dracoLoader );
+        const loadObjectWithObj = (parameter) => {
+            const newloader = new OBJLoader();
+            const obj =  newloader.loadAsync(parameter);
+            return obj;
+        }
 
-        // loader.load(
-        //     "https://shortcoin2025.github.io/check/LittlestTokyo.glb",
+        function createClone(object,name, color, position) {
+            const clone = object.clone();
+            clone.material = object.material.clone();
+            clone.name = name;
+            clone.material.emissive = new THREE.Color(0x000000);
+            clone.material.color.set(color);
+            clone.position.copy(position);
+            scene.add(clone);
+            objects.push(clone);
+        }
+
+        const tree = loadObjectWithObj("https://shortcoin2025.github.io/check/tree.obj");
+        if(tree) {
+            console.log("obj.clone()",obj.clone())
+            createClone(tokyo,"First Object", 0xff0000, new THREE.Vector3(-2, 0, -2));
+            createClone(tokyo,"Second Object", 0x00ff00, new THREE.Vector3(2, 0, -4));
+            createClone(tokyo,"Third Object", 0x0000ff, new THREE.Vector3(-2, 0, -6));
+        }
+
+        // const newloader = new OBJLoader();
+        // newloader.load(
+        //     "https://shortcoin2025.github.io/check/tree.obj",
         //     // 'https://github.com/mrdoob/three.js/blob/master/examples/models/gltf/LittlestTokyo.glb', 
-        //     function (gltf) {
-        //         const tokyo = gltf.scene;
-        //         scene.add(tokyo);
+        //     function (obj) {
+        //         const tokyo = obj.children[0];
+        //         console.log("obj.clone()",obj.clone())
+        //         function createClone(name, color, position) {
+        //             const clone = tokyo.clone();
+        //             clone.material = tokyo.material.clone();
+        //             clone.name = name;
+        //             clone.material.emissive = new THREE.Color(0x000000);
+        //             clone.material.color.set(color);
+        //             clone.position.copy(position);
+        //             scene.add(clone);
+        //             objects.push(clone);
+        //         }
+                
+        //         createClone("First Object", 0xff0000, new THREE.Vector3(-2, 0, -2));
+        //         createClone("Second Object", 0x00ff00, new THREE.Vector3(2, 0, -4));
+        //         createClone("Third Object", 0x0000ff, new THREE.Vector3(-2, 0, -6));
+        //         // scene.add(tokyo);
         //         tokyo.position.copy(new THREE.Vector3(0,0,10))
         //     },
         //     undefined,
@@ -126,6 +133,27 @@ document.addEventListener('DOMContentLoaded', function () {
         //         console.error('Error loading GLB:', error);
         //     }
         // );
+
+        const loader = new GLTFLoader();
+        const dracoLoader = new DRACOLoader();
+        // dracoLoader.setDecoderPath( 'jsm/libs/draco/gltf/' );
+        loader.setDRACOLoader( dracoLoader );
+
+        loader.load(
+            "https://drive.usercontent.google.com/download?id=1EuDS-cRgC9jBH3S8NdN35XkK31htyclK&export=download&authuser=0",
+            // "https://shortcoin2025.github.io/check/ReachNetwork.glb",
+            // 'https://github.com/mrdoob/three.js/blob/master/examples/models/gltf/LittlestTokyo.glb', 
+            function (gltf) {
+                const tokyo = gltf.scene;
+                console.log("gltf: ",tokyo,gltf)
+                scene.add(tokyo);
+                tokyo.position.copy(new THREE.Vector3(0,0,10))
+            },
+            undefined,
+            function (error) {
+                console.error('Error loading GLB:', error);
+            }
+        );
 
         const light = new THREE.AmbientLight(0xffffff);
         scene.add(light);
